@@ -165,13 +165,35 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Pr
   0%,100%{color:#FF4488;text-shadow:0 0 6px #FF4488,0 0 14px #FF0066}
   50%{color:#FF88BB;text-shadow:0 0 10px #FF88BB,0 0 22px #FF4488}
 }
-/* mobile */
-#mctl{position:fixed;bottom:18px;left:0;right:0;display:none;justify-content:space-between;padding:0 12px;z-index:95;pointer-events:none}
-#mctl.on{display:flex}
-.mbt{width:54px;height:54px;background:rgba(0,10,50,.65);border:2px solid rgba(0,200,255,.38);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;pointer-events:all;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:.08s}
-.mbt:active{transform:scale(.88);background:rgba(0,40,100,.8)}
-.matk{background:rgba(180,0,50,.65)!important;border-color:rgba(255,60,80,.5)!important}
-.dpad{display:flex;gap:6px;align-items:center}
+/* mobile — botones táctiles grandes, con brillo y movibles */
+#mctl{position:fixed;inset:0;display:none;z-index:95;pointer-events:none;--mbs:clamp(78px,24vh,112px)}
+#mctl.on{display:block}
+.mbt{position:absolute;width:var(--mbs);height:var(--mbs);transform:translate(-50%,-50%);border-radius:50%;
+  border:3px solid rgba(0,225,255,.8);
+  background:radial-gradient(circle at 35% 28%,rgba(150,225,255,.6),rgba(8,28,92,.82) 64%);
+  box-shadow:0 0 12px rgba(0,200,255,.5),inset 0 0 14px rgba(255,255,255,.2),0 5px 12px rgba(0,0,0,.55);
+  color:#fff;font-size:calc(var(--mbs)*.42);line-height:1;display:flex;align-items:center;justify-content:center;
+  text-shadow:0 0 8px rgba(0,229,255,.9),0 2px 3px rgba(0,0,0,.7);
+  pointer-events:all;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+  -webkit-tap-highlight-color:transparent;opacity:.8;padding:0;
+  transition:transform .08s,box-shadow .08s,background .08s,opacity .08s,border-color .08s}
+.mbt.mjump{border-color:rgba(90,255,150,.85);background:radial-gradient(circle at 35% 28%,rgba(170,255,200,.55),rgba(0,70,40,.82) 64%);box-shadow:0 0 12px rgba(0,255,130,.5),inset 0 0 14px rgba(255,255,255,.2),0 5px 12px rgba(0,0,0,.55)}
+.mbt.matk{border-color:rgba(255,90,100,.9);background:radial-gradient(circle at 35% 28%,rgba(255,180,170,.6),rgba(110,0,30,.85) 64%);box-shadow:0 0 12px rgba(255,60,80,.55),inset 0 0 14px rgba(255,255,255,.2),0 5px 12px rgba(0,0,0,.55)}
+.mbt.down{opacity:1;transform:translate(-50%,-50%) scale(1.13);border-color:#fff;
+  background:radial-gradient(circle at 50% 45%,#fff,#8fecff 34%,rgba(0,130,255,.9) 82%);
+  box-shadow:0 0 22px #00e5ff,0 0 52px rgba(0,229,255,.85),inset 0 0 20px rgba(255,255,255,.75);text-shadow:0 0 10px #0077ff}
+.mbt.mjump.down{background:radial-gradient(circle at 50% 45%,#fff,#a6ffc6 34%,rgba(0,200,100,.9) 82%);box-shadow:0 0 22px #00ff88,0 0 52px rgba(0,255,136,.85),inset 0 0 20px rgba(255,255,255,.75)}
+.mbt.matk.down{background:radial-gradient(circle at 50% 45%,#fff,#ffb0a8 34%,rgba(255,40,60,.92) 82%);box-shadow:0 0 22px #ff3355,0 0 52px rgba(255,51,85,.85),inset 0 0 20px rgba(255,255,255,.75)}
+#mctl.edit .mbt{border-style:dashed;border-color:#FFD700;opacity:.95}
+.mbt.drag{opacity:1;transform:translate(-50%,-50%) scale(1.2);border:3px dashed #FFD700;box-shadow:0 0 26px #FFD700,0 0 60px rgba(255,215,0,.7)}
+.mbedit{position:absolute;bottom:8px;pointer-events:all;touch-action:manipulation;z-index:2;
+  font-family:'Press Start 2P',monospace;font-size:11px;color:#FFD700;padding:10px 12px;min-height:44px;
+  background:rgba(20,15,0,.85);border:2px solid rgba(255,215,0,.7);border-radius:10px;opacity:.75;
+  -webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+#mbEdit{left:50%;transform:translateX(-50%)}
+#mbReset{left:calc(50% + 70px);display:none}
+#mctl.edit #mbEdit{opacity:1;background:rgba(80,60,0,.95)}
+#mctl.edit #mbReset{display:block}
 /* result / LB */
 #S3,#S4,#SWIN{background:radial-gradient(ellipse at 50% 35%,#100030,#020210)}
 .stars-row{display:flex;justify-content:center;gap:10px;margin:4px 0}
@@ -214,7 +236,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Pr
   border:2px solid rgba(255,200,0,.5);border-radius:10px;
   padding:7px 10px;min-width:175px;max-width:205px;
   box-shadow:0 0 20px rgba(255,200,0,.25),0 4px 20px rgba(0,0,0,.7);display:none}
-#miniLB.on{display:block}
+#miniLB.on{display:none!important}
 .mlb-title{font-size:8px;color:#FFD700;letter-spacing:2px;text-align:center;margin-bottom:5px;
   border-bottom:1px solid rgba(255,200,0,.3);padding-bottom:4px;
   text-shadow:0 0 10px rgba(255,215,0,.6)}
@@ -415,12 +437,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Pr
 
 <!-- MOBILE CONTROLS -->
 <div id="mctl">
-  <div class="dpad">
-    <button class="mbt" ontouchstart="K.ArrowLeft=1" ontouchend="K.ArrowLeft=0" onmousedown="K.ArrowLeft=1" onmouseup="K.ArrowLeft=0">◀</button>
-    <button class="mbt" ontouchstart="K.ArrowRight=1" ontouchend="K.ArrowRight=0" onmousedown="K.ArrowRight=1" onmouseup="K.ArrowRight=0">▶</button>
-  </div>
-  <button class="mbt" ontouchstart="doJump()" onmousedown="doJump()">⬆</button>
-  <button class="mbt matk" ontouchstart="doAttack()" onmousedown="doAttack()">⚔️</button>
+  <button class="mbt" id="mbL" data-k="L" aria-label="Izquierda">◀</button>
+  <button class="mbt" id="mbR" data-k="R" aria-label="Derecha">▶</button>
+  <button class="mbt mjump" id="mbJ" data-k="J" aria-label="Saltar">⬆</button>
+  <button class="mbt matk" id="mbA" data-k="A" aria-label="Atacar">⚔️</button>
+  <button class="mbedit" id="mbEdit">✥ MOVER</button>
+  <button class="mbedit" id="mbReset">↺</button>
 </div>
 
 <!-- ── POWER CHOOSER PANEL ── -->
@@ -8189,8 +8211,24 @@ function oTxt(text,x,y,fill,size,align='center',strokeW=3,strokeCol='rgba(0,0,0,
   CX.fillStyle=fill;
   CX.fillText(text,x,y);
 }
-let _lastScore=0, _lastStreak=0, _lastLives=99;
+let _lastScore=0, _lastStreak=0, _lastLives=99, _lifeMilestone=0;
 function updHUD(){
+  // Vida extra cada 10.000 puntos (máx. 8 vidas)
+  {
+    const _m=Math.floor(GS.totalScore/10000);
+    if(_m<_lifeMilestone){ _lifeMilestone=_m; }
+    else if(_m>_lifeMilestone){
+      const _gain=_m-_lifeMilestone; _lifeMilestone=_m;
+      if(GS.lives>0){
+        GS.lives=Math.min(GS.lives+_gain,8);
+        try{
+          SFX.life();
+          spawnTfx(W/2-110,H*.3,'🎉 +1 VIDA · '+(_m*10000).toLocaleString()+' PTS','#FF4488','clamp(14px,3vw,22px)');
+          spawnPfx(W/2,H*.3,'#FFD700',20);
+        }catch(e){}
+      }
+    }
+  }
   document.getElementById('hName').textContent=GS.name.slice(0,10).toUpperCase();
   const sc=document.getElementById('hScore');
   sc.textContent=GS.totalScore.toLocaleString();
@@ -8858,6 +8896,7 @@ document.getElementById('btnStart').addEventListener('click',()=>{
   uAC();
   GS.name=(_char==='peach'?'KAGE':'SAKURA')+'-'+Math.floor(100+Math.random()*900);
   GS.char=_char;GS.phase='easy';GS.totalScore=0;GS.level=0;
+  _lifeMilestone=0;
   _xpBar=0; _xpTotalLevels=0; _xpRewardAnim=0; _turboTrail=[];
   startLevel(0,'easy');
 });
@@ -9378,6 +9417,87 @@ function drawMiniPeach(canvasId){
     origShow(n);
     if(n===5){if(craf)cancelAnimationFrame(craf);drawCredBg();}
   };
+})();
+
+// ── CONTROLES TÁCTILES: grandes, con brillo y movibles ──
+(function(){
+  const box=document.getElementById('mctl'); if(!box) return;
+  const KEY='ninja_btn_pos_v1';
+  const DEF={L:[.09,.76],R:[.23,.76],J:[.78,.80],A:[.91,.72]};
+  let pos=JSON.parse(JSON.stringify(DEF));
+  try{ const sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv) for(const k in DEF) if(sv[k]&&sv[k].length===2) pos[k]=sv[k]; }catch(e){}
+  const btns={L:document.getElementById('mbL'),R:document.getElementById('mbR'),J:document.getElementById('mbJ'),A:document.getElementById('mbA')};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function place(k){
+    const el=btns[k], r=el.offsetWidth/2||40;
+    const w=window.innerWidth,h=window.innerHeight;
+    const x=clamp(pos[k][0]*w,r,w-r), y=clamp(pos[k][1]*h,r,h-r);
+    el.style.left=x+'px'; el.style.top=y+'px';
+  }
+  function placeAll(){ for(const k in btns) place(k); }
+  function save(){ try{localStorage.setItem(KEY,JSON.stringify(pos));}catch(e){} }
+  window.addEventListener('resize',placeAll);
+  window.addEventListener('orientationchange',()=>setTimeout(placeAll,250));
+  new MutationObserver(placeAll).observe(box,{attributes:true,attributeFilter:['class']});
+  placeAll();
+
+  let editMode=false;
+  const eb=document.getElementById('mbEdit'), rb=document.getElementById('mbReset');
+  eb.addEventListener('click',()=>{ editMode=!editMode; box.classList.toggle('edit',editMode); eb.textContent=editMode?'✔ LISTO':'✥ MOVER'; });
+  rb.addEventListener('click',()=>{ pos=JSON.parse(JSON.stringify(DEF)); placeAll(); save(); });
+  box.addEventListener('contextmenu',e=>e.preventDefault());
+
+  const HOLD_MS=800, MOVE_TOL=14;
+  function press(k){
+    if(k==='L') K.ArrowLeft=1; else if(k==='R') K.ArrowRight=1;
+    else if(k==='J') doJump(); else if(k==='A') doAttack();
+  }
+  function release(k){ if(k==='L') K.ArrowLeft=0; else if(k==='R') K.ArrowRight=0; }
+
+  Object.keys(btns).forEach(k=>{
+    const el=btns[k]; let st=null;
+    el.addEventListener('pointerdown',e=>{
+      e.preventDefault();
+      try{el.setPointerCapture(e.pointerId);}catch(_){}
+      st={id:e.pointerId,sx:e.clientX,sy:e.clientY,drag:false,timer:null,ox:0,oy:0};
+      el.classList.add('down');
+      const startDrag=()=>{
+        st.drag=true; release(k);
+        el.classList.remove('down'); el.classList.add('drag');
+        const r=el.getBoundingClientRect();
+        st.ox=st.sx-(r.left+r.width/2); st.oy=st.sy-(r.top+r.height/2);
+        if(navigator.vibrate) try{navigator.vibrate(30);}catch(_){}
+      };
+      if(editMode){ startDrag(); }
+      else{
+        press(k);
+        // Mantener ~0.8 s sin mover el dedo en ⬆ / ⚔️ activa el modo mover.
+        // ◀ ▶ se mueven con el botón ✥ MOVER para no interrumpir la caminata.
+        if(k==='J'||k==='A') st.timer=setTimeout(()=>{ if(st&&!st.drag) startDrag(); },HOLD_MS);
+      }
+    });
+    el.addEventListener('pointermove',e=>{
+      if(!st||e.pointerId!==st.id) return;
+      if(!st.drag){
+        if(st.timer && Math.hypot(e.clientX-st.sx,e.clientY-st.sy)>MOVE_TOL){ clearTimeout(st.timer); st.timer=null; }
+        return;
+      }
+      e.preventDefault();
+      pos[k]=[(e.clientX-st.ox)/window.innerWidth,(e.clientY-st.oy)/window.innerHeight];
+      place(k);
+    });
+    const end=e=>{
+      if(!st||(e&&e.pointerId!==st.id)) return;
+      clearTimeout(st.timer);
+      release(k);
+      if(st.drag) save();
+      el.classList.remove('down','drag'); st=null;
+    };
+    el.addEventListener('pointerup',end);
+    el.addEventListener('pointercancel',end);
+    el.addEventListener('lostpointercapture',end);
+  });
+  window.addEventListener('blur',()=>{ K.ArrowLeft=0; K.ArrowRight=0; });
 })();
 </script>
 </body>
